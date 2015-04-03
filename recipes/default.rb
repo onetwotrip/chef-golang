@@ -59,7 +59,13 @@ template "/etc/profile.d/golang.sh" do
 end
 
 if node['go']['scm']
-  %w(git mercurial bzr).each do |scm|
-    package scm
+  if node['platform_version'] == "10.04"
+    %w(git-core mercurial bzr).each do |scm|
+       package scm
+    end
+  else
+    %w(git mercurial bzr).each do |scm|
+       package scm
+    end
   end
 end
